@@ -1,29 +1,33 @@
-import { Container, Text } from 'pixi.js';
+import { Container, Sprite, Assets } from 'pixi.js';
 import { Game } from '../core/Game';
 import { LevelScene } from './LevelScene';
-
-export class MainMenuScene extends Container {
+import { BaseScene } from './BaseScene';
+export class MainMenuScene extends BaseScene {
   constructor() {
     super();
 
-    const startButton = new Text({
-      text: 'Start Game',
-      style: {
-        fontSize: 36,
-        fill: 0xffffff,
-      },
+    const swordCursor = "url('/assets/sword.png'), auto";
+    Game.app.renderer.events.cursorStyles.default = swordCursor;
+    Game.app.renderer.events.cursorStyles.hover = swordCursor;
+
+    this.loadAssets();
+  }
+
+  async loadAssets() {
+    const buttonTexture = await Assets.load('/assets/startGame.png');
+
+    const button = new Sprite(buttonTexture);
+    button.anchor.set(0.5);
+    button.position.set(Game.app.screen.width / 2, Game.app.screen.height / 2);
+    button.scale.set(0.5);
+    button.interactive = true;
+    button.eventMode = 'static';
+    button.cursor = 'pointer';
+
+    button.on('pointerdown', () => {
+      Game.instance.changeScene(new LevelScene());
     });
-    startButton.anchor.set(0.5);
-    startButton.x = Game.app.screen.width / 2;
-    startButton.y = Game.app.screen.height / 2;
-    startButton.interactive = true;
-    // startButton.buttonMode = true;
-    startButton.eventMode = 'static';
-    startButton.cursor = 'pointer';
-    startButton.on('pointerdown', () => {
-      Game.app.stage.removeChildren();
-      Game.app.stage.addChild(new LevelScene());
-    });
-    this.addChild(startButton);
+
+    this.addChild(button);
   }
 }

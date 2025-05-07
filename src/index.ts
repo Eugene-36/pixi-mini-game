@@ -1,3 +1,10 @@
+import { Ticker } from 'pixi.js';
 import { Game } from './core/Game';
+import { LevelManager } from './managers/LevelManager';
 
-new Game();
+(async () => {
+  await LevelManager.loadLevels();
+  new Game();
+  Ticker.shared.autoStart = true;
+  Ticker.shared.start();
+})();
