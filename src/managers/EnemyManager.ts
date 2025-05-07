@@ -22,7 +22,7 @@ export class EnemyManager {
     this.lastSpawnTime = 0;
     this.enemies = [];
   }
-  // Добавляем метод для установки интервала спавна
+  //  Метод  установки интервала спавна
   static canSpawn(): boolean {
     return (
       this.spawnedCount < this.totalToSpawn &&
