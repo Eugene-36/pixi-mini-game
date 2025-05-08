@@ -5,7 +5,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 module.exports = {
   entry: './src/index.ts',
   output: {
-    filename: 'bundle.js',
+    filename: '[name].[contenthash].js',
     path: path.resolve(__dirname, 'dist'),
     clean: true,
   },
@@ -21,6 +21,11 @@ module.exports = {
         exclude: /node_modules/,
       },
     ],
+  },
+  optimization: {
+    splitChunks: {
+      chunks: 'all',
+    },
   },
   plugins: [
     new HtmlWebpackPlugin({
