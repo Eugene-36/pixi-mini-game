@@ -26,7 +26,6 @@ export class Game {
       });
     });
     SoundManager.init();
-    SoundManager.playBg();
   }
 
   start() {

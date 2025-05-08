@@ -2,6 +2,8 @@ import { Sprite, Assets, Rectangle } from 'pixi.js';
 import { Game } from '../core/Game';
 import { LevelScene } from './LevelScene';
 import { BaseScene } from './BaseScene';
+import { SoundManager } from '../managers/SoundManager';
+
 export class MainMenuScene extends BaseScene {
   constructor() {
     super();
@@ -29,6 +31,7 @@ export class MainMenuScene extends BaseScene {
     const height = buttonTexture.height * button.scale.y;
     button.hitArea = new Rectangle(-width / 2, -height / 2, width, height);
     button.on('pointerdown', () => {
+      SoundManager.playBg();
       Game.instance.changeScene(new LevelScene());
     });
 
