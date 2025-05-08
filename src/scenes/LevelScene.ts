@@ -45,7 +45,9 @@ export class LevelScene extends BaseScene {
       () => this.restart()
     );
     this.addChild(this.winScreen);
+  }
 
+  init() {
     this.loadAssets();
   }
 

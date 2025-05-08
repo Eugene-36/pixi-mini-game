@@ -1,4 +1,4 @@
-import { Container, Sprite, Assets } from 'pixi.js';
+import { Sprite, Assets, Rectangle } from 'pixi.js';
 import { Game } from '../core/Game';
 import { LevelScene } from './LevelScene';
 import { BaseScene } from './BaseScene';
@@ -24,6 +24,10 @@ export class MainMenuScene extends BaseScene {
     button.eventMode = 'static';
     button.cursor = 'pointer';
 
+    //Клик только по картинке
+    const width = buttonTexture.width * button.scale.x;
+    const height = buttonTexture.height * button.scale.y;
+    button.hitArea = new Rectangle(-width / 2, -height / 2, width, height);
     button.on('pointerdown', () => {
       Game.instance.changeScene(new LevelScene());
     });
