@@ -57,7 +57,7 @@ npm run build
 src/
 ├── assets/             # медиафайлы
 ├── core/               # Game.ts (точка входа)
-├── scenes/             # сцены: MainMenu, LevelScene, FinalWinScene
+├── scenes/             # сцены: MainMenu, LevelScene
 ├── ui/                 # кнопки, экраны победы и т.д.
 ├── utils/              # хелперы (createText, кнопки и пр.)
 └── index.ts            # точка запуска игры
