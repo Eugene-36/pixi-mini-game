@@ -1,6 +1,5 @@
 import { Container, Texture } from 'pixi.js';
 import { Enemy } from '../entities/Enemy';
-import { LevelManager } from './LevelManager';
 
 export class EnemyManager {
   static container: Container;
