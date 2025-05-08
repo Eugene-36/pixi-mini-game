@@ -270,7 +270,7 @@ export class LevelScene extends BaseScene {
     this.winScreen.visible = false;
   }
   updateScene(delta: number) {
-    if (this.levelEnded || this.isPaused) return;
+    if (this.levelEnded || this.isPaused || !this.timeText) return;
 
     EnemyManager.update(delta);
 
