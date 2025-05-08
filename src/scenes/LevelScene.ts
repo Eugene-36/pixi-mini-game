@@ -7,7 +7,7 @@ import { SoundManager } from '../managers/SoundManager';
 import { Enemy } from '../entities/Enemy';
 import { LevelManager } from '../managers/LevelManager';
 import { getStars } from '../utils/starRating';
-import { FinalWinScene } from './FinalWinScene';
+import { FinalWinScene } from '../ui/FinalWinScene';
 import { createOrUpdateText } from '../utils/uiHelpers';
 
 export class LevelScene extends BaseScene {
@@ -280,6 +280,8 @@ export class LevelScene extends BaseScene {
       this.elapsedTime = 0;
       this.levelTimeLeft--;
       this.timeText.text = `Time: ${this.levelTimeLeft}`;
+      this.timeText.style.fill =
+        this.levelTimeLeft <= 5 ? '#ff0000' : '#ffffff';
 
       if (this.levelTimeLeft <= 0) {
         this.levelEnded = true;

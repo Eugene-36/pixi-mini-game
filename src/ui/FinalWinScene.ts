@@ -1,7 +1,7 @@
 import { Text } from 'pixi.js';
-import { BaseScene } from './BaseScene';
+import { BaseScene } from '../scenes/BaseScene';
 import { Game } from '../core/Game';
-import { MainMenuScene } from './MainMenuScene';
+import { MainMenuScene } from '../scenes/MainMenuScene';
 import { LevelManager } from '../managers/LevelManager';
 import { createBasicButton } from '../utils/createBasicButton';
 import { createOrUpdateText } from '../utils/uiHelpers';
