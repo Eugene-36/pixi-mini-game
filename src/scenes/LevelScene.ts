@@ -230,13 +230,13 @@ export class LevelScene extends BaseScene {
   private useBooster() {
     if (this.boosterUsed || this.levelEnded) return;
 
-    this.levelTimeLeft += 5; // +5 секунд
+    this.levelTimeLeft += 5;
     this.timeText.text = `Time: ${this.levelTimeLeft}`;
     this.boosterUsed = true;
 
     // Обновим UI кнопки
     this.boosterButton.text = 'Booster Used';
-    this.boosterButton.style.fill = '#888888';
+    this.boosterButton.style.fill = '#272727';
     this.boosterButton.interactive = false;
   }
   private nextLevel() {
