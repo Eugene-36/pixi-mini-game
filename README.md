@@ -1,14 +1,14 @@
 # 🐉 Pixi Mini Game
 
-Интерактивная мини-игра на **Pixi.js**, где игроку нужно уничтожать драконов на время. Реализованы уровни, анимации, звуковые эффекты, пауза, бустер времени и финальный экран победы.
+An interactive mini-game built with **Pixi.js**, where the player must defeat dragons within a time limit. The game includes levels, animations, sound effects, pause functionality, a time booster, and a final victory screen.
 
-## 🚀 Демо
+## 🚀 Demo
 
-👉 [Играть онлайн (Netlify)](https://dragonignis.netlify.app/)
+👉 [Play Online (Netlify)](https://dragonignis.netlify.app/)
 
 ---
 
-## 📦 Установка и запуск
+## 📦 Installation & Run
 
 ```bash
 git clone https://github.com/Eugene-36/pixi-mini-game.git
@@ -17,105 +17,104 @@ npm install
 npm run start
 ```
 
-Игра откроется в браузере по адресу: `http://localhost:8081/`
+The game will open in your browser at: `http://localhost:8081/`
 
 ---
 
-## ⚙️ Сборка
+## ⚙️ Build
 
 ```bash
 npm run build
 ```
 
-Собранные файлы появятся в директории `/dist`.
+The compiled files will appear in the `/dist` directory.
 
 ---
 
-## 🌍 Деплой на Netlify
+## 🌍 Deploy to Netlify
 
-1. Зайди на [https://app.netlify.com](https://app.netlify.com)
-2. Нажми **"Add new site" → "Import from Git"**
-3. Выбери GitHub и подключи репозиторий
-4. Укажи:
+1. Go to [https://app.netlify.com](https://app.netlify.com)
+2. Click **"Add new site" → "Import from Git"**
+3. Choose GitHub and connect your repository
+4. Set:
    - Build command: `npm run build`
    - Publish directory: `dist`
-5. Жми **Deploy site**
+5. Click **Deploy site**
 
-## 🛠 Стек технологий
+---
+
+## 🛠 Tech Stack
 
 - [PixiJS](https://pixijs.com/) v8
 - TypeScript
 - Webpack 5
-- Howler.js (для звуков)
-- Netlify (деплой)
+- Howler.js (for sound)
+- Netlify (deployment)
 
 ---
 
-## 📁 Структура проекта
+## 📁 Project Structure
 
 ```
 public/
-├── assets/             # медиафайлы
-├── index.html          # разметка
-├── style.css           # стили
+├── assets/             # media files
+├── index.html          # markup
+├── style.css           # styles
 src/
-├── core/               # Game.ts (точка входа)
-├── entities/           # Enemy.ts (настройка параметров врага)
+├── core/               # Game.ts (entry point)
+├── entities/           # Enemy.ts (enemy configuration)
 ├── managers/           # EnemyManager.ts, LevelManager.ts, SoundManager
-├── scenes/             # сцены: MainMenu, LevelScene
-├── ui/                 # кнопки, экраны победы и т.д.
-├── utils/              # хелперы (createText, кнопки и пр.)
-└── index.ts            # точка запуска игры
+├── scenes/             # scenes: MainMenu, LevelScene
+├── ui/                 # buttons, win screen, etc.
+├── utils/              # helpers (createText, buttons, etc.)
+└── index.ts            # game launcher
 ```
 
 ---
 
-## 🧪 Функциональность
+## 🧪 Features
 
-- ⏸ Пауза
-- ⏳ Бустер времени
-- 🔇 Вкл/выкл звука
-- ⭐ Оценка за уровень (1–3 звезды)
-- 🏆 Финальный экран победы
-- 🗡 Кастомный курсор-меч
-- 🎵 Звуки победы, поражения, клика, фон
-
-
----
-
-✅ Особенности
-
-Кроссбраузерность подтверждена: игра протестирована и стабильно работает   в:
-
-Google Chrome
-
-Mozilla Firefox
-
-Opera
-
-Safari
-
+- ⏸ Pause
+- ⏳ Time booster
+- 🔇 Sound toggle
+- ⭐ Level score (1–3 stars)
+- 🏆 Final victory screen
+- 🗡 Custom sword cursor
+- 🎵 Sounds: win, lose, click, background
 
 ---
 
-⚙️ Важное замечание про PixiJS Application
+✅ Compatibility
 
-Проект использует PixiJS v8.9.2, и инициализация игры выполнена через:
+Cross-browser tested. The game works reliably in:
 
+- Google Chrome  
+- Mozilla Firefox  
+- Opera  
+- Safari  
+
+---
+
+⚙️ Important Note About PixiJS Application
+
+This project uses PixiJS v8.9.2 and initializes the game via:
+
+```ts
 const app = new Application({ width: 800, height: 600, backgroundColor: 0x1099bb });
+```
 
-В TypeScript может появиться предупреждение, что Application помечен как deprecated. Это связано с подготовкой PixiJS к версии 9, где планируется использовать Application.init().
+You may see a TypeScript warning that `Application` is marked as deprecated. This is related to PixiJS preparing for version 9, where `Application.init()` will be introduced.
 
-🔒 Однако в версии v8.9.2, используемой в этом проекте, метод init() не существует, и new Application() остаётся корректным и официально поддерживаемым методом.
+🔒 However, in version v8.9.2 used in this project, `init()` does **not** exist — and `new Application()` remains valid and officially supported.
 
 ---
 
-## 👨‍💻 Автор
+## 👨‍💻 Author
 
 **Eugene** – [GitHub](https://github.com/Eugene-36)
 
 ---
 
-## 📜 Лицензия
+## 📜 License
 
 MIT License
