@@ -13,8 +13,21 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "howler": "^2.2.4",
-    "pixi.js": "^8.9.2"
+    "@pixi/app": "^7.4.3",
+    "@pixi/assets": "^7.4.3",
+    "@pixi/core": "^7.4.3",
+    "@pixi/display": "^7.4.3",
+    "@pixi/events": "^7.4.3",
+    "@pixi/extensions": "^7.4.3",
+    "@pixi/graphics": "^7.4.3",
+    "@pixi/math": "^7.4.3",
+    "@pixi/particle-emitter": "^5.0.8",
+    "@pixi/sprite": "^7.4.3",
+    "@pixi/sprite-animated": "^7.4.3",
+    "@pixi/spritesheet": "^7.4.3",
+    "@pixi/text": "^7.4.3",
+    "@pixi/ticker": "^7.4.3",
+    "howler": "^2.2.4"
   },
   "devDependencies": {
     "@types/howler": "^2.2.12",

@@ -1,5 +1,5 @@
-import { Container, Text, TextStyle } from 'pixi.js';
-
+import { Text, TextStyle } from '@pixi/text';
+import { Container } from '@pixi/display';
 export function createOrUpdateText(
   container: Container,
   ref: Text | null,
@@ -14,10 +14,10 @@ export function createOrUpdateText(
     ref.destroy();
   }
 
-  const text = new Text({
-    text: content,
-    style: { fontSize: 24, fill: '#ffffff', ...style },
-  });
+  const text = new Text(
+    content,
+    { fontSize: 24, fill: '#ffffff', ...style }
+  );
   if (anchor) {
     text.anchor.set(anchor.x, anchor.y);
   }

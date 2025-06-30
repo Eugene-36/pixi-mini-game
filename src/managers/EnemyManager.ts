@@ -1,5 +1,7 @@
-import { Container, Texture } from 'pixi.js';
+import { Container } from '@pixi/display';
+import { Texture } from '@pixi/core';
 import { Enemy } from '../entities/Enemy';
+import { HitEmitter } from '../visualEffects/HitEmitter';
 
 export class EnemyManager {
   static container: Container;
@@ -12,6 +14,7 @@ export class EnemyManager {
   static spawnInterval: number = 1000;
   static lastSpawnTime: number = 0;
   static gameOver = false;
+  static hitEffect: HitEmitter;
 
   static init(container: Container, textures: Texture[], totalEnemies: number) {
     this.container = container;
@@ -32,7 +35,7 @@ export class EnemyManager {
   static spawnEnemy(): Enemy | null {
     if (!this.canSpawn()) return null;
 
-    const enemy = new Enemy(this.enemyTextures);
+    const enemy = new Enemy(this.enemyTextures, this.hitEffect);
     this.container.addChild(enemy);
     this.enemies.push(enemy);
     this.spawnedCount++;
@@ -51,7 +54,7 @@ export class EnemyManager {
     this.enemies.forEach((e) => e.updateEnemy(delta));
   }
   static setEnemiesInteractive(active: boolean) {
-    this.enemies.forEach((enemy) => (enemy.interactive = active));
+    this.enemies.forEach((enemy) => ((enemy as any).interactive = active));
   }
 
   static reset(): void {

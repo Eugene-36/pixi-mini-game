@@ -1,4 +1,4 @@
-import { Text } from 'pixi.js';
+import { Text } from '@pixi/text';
 import { BaseScene } from '../scenes/BaseScene';
 import { Game } from '../core/Game';
 import { MainMenuScene } from '../scenes/MainMenuScene';

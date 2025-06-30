@@ -1,4 +1,11 @@
-import { Graphics, Sprite, Text, Assets, Texture } from 'pixi.js';
+// import { Graphics, Sprite, Text, Assets, Texture } from 'pixi.js';
+// ========
+import { Graphics } from '@pixi/graphics';
+import { Sprite } from '@pixi/sprite';
+import { Text } from '@pixi/text';
+import { Assets } from '@pixi/assets';
+import { Texture } from '@pixi/core';
+// ========
 import { Game } from '../core/Game';
 import { BaseScene } from './BaseScene';
 import { WinScreen } from '../ui/WinScreen';
@@ -9,6 +16,8 @@ import { LevelManager } from '../managers/LevelManager';
 import { getStars } from '../utils/starRating';
 import { FinalWinScene } from '../ui/FinalWinScene';
 import { createOrUpdateText } from '../utils/uiHelpers';
+import { HitEmitter } from '../visualEffects/HitEmitter';
+import { loadAtlas } from '../utils/loadAtlas';
 
 export class LevelScene extends BaseScene {
   private enemyTextures: Texture[] = [];
@@ -30,13 +39,15 @@ export class LevelScene extends BaseScene {
   //Текущий уровень перед началом сцены
   private levelPopupText?: Text;
   private muteBtn!: Text;
-
+  private hitEffect: HitEmitter;
+  private enemy: Enemy;
   constructor() {
     super();
 
-    this.transitionOverlay = new Graphics()
-      .rect(0, 0, 800, 600)
-      .fill({ color: 0x000000, alpha: 1 });
+    this.transitionOverlay = new Graphics();
+    this.transitionOverlay.beginFill(0x000000, 1);
+    this.transitionOverlay.drawRect(0, 0, 800, 600);
+    this.transitionOverlay.endFill();
     this.transitionOverlay.alpha = 0;
     this.addChild(this.transitionOverlay);
 
@@ -48,30 +59,32 @@ export class LevelScene extends BaseScene {
   }
 
   init() {
+    console.log('⏳ Loading assets...');
     this.loadAssets();
+    // this.hitEffect = new HitEmitter(this, Texture.from('particle.png'));
+
+    // this.enemy = new Enemy(this.enemyTextures, this.hitEffect);
+    // this.addChild(this.enemy);
+    // this.hitEffect = new HitEmitter(this, Texture.from('particle.png'));
+    // Game.app.ticker.add((delta) => this.hitEffect.update(delta));
+    console.log('✅ LevelScene init() called');
   }
 
   async loadAssets() {
     try {
-      const [atlas, backgroundTexture] = await Promise.all([
-        Assets.load('/assets/enemies/dr1.json'),
-        Assets.load('/assets/dragon-bg.png'),
-      ]);
+      console.log('⏳ Loading assets...');
 
+      const backgroundTexture = await Assets.load('/assets/dragon-bg.png');
       const bgSprite = new Sprite(backgroundTexture);
       bgSprite.width = Game.app.screen.width;
       bgSprite.height = Game.app.screen.height;
       this.addChildAt(bgSprite, 0);
 
-      const textures: Texture[] = Object.keys(atlas.textures)
-        .sort((a, b) => {
-          const aNum = parseInt(a.match(/\d+/)?.[0] || '0', 10);
-          const bNum = parseInt(b.match(/\d+/)?.[0] || '0', 10);
-          return aNum - bNum;
-        })
-        .map((frameName) => atlas.textures[frameName]);
+      const atlasTextures = await loadAtlas('/assets/enemies/dr1');
 
-      this.enemyTextures = textures;
+      this.enemyTextures = Object.values(atlasTextures); // по порядку, если нужны все
+      console.log('✅ Loaded enemy textures:', this.enemyTextures.length);
+
       this.startLevel();
     } catch (error) {
       console.error('Failed to load assets:', error);
@@ -105,13 +118,10 @@ export class LevelScene extends BaseScene {
       this.levelPopupText.destroy();
     }
 
-    this.levelPopupText = new Text({
-      text: `Level ${level}`,
-      style: {
-        fontSize: 60,
-        fill: '#ffffff',
-        fontWeight: 'bold',
-      },
+    this.levelPopupText = new Text(`Level ${level}`, {
+      fontSize: 60,
+      fill: '#ffffff',
+      fontWeight: 'bold',
     });
     this.levelPopupText.anchor.set(0.5);
     this.levelPopupText.position.set(400, 300);
@@ -127,13 +137,13 @@ export class LevelScene extends BaseScene {
   }
   private soundMute() {
     if (!this.muteBtn) {
-      this.muteBtn = new Text({
-        text: SoundManager.isMuted ? '🔇' : '🔊',
-        style: { fontSize: 30, fill: '#ffffff' },
+      this.muteBtn = new Text(SoundManager.isMuted ? '🔇' : '🔊', {
+        fontSize: 30,
+        fill: '#ffffff',
       });
       this.muteBtn.position.set(740, 10);
-      this.muteBtn.interactive = true;
-      this.muteBtn.on('pointerdown', () => {
+      (this.muteBtn as any).interactive = true;
+      (this.muteBtn as any).on('pointerdown', (event: PointerEvent) => {
         SoundManager.toggleMute();
         this.updateMuteIcon();
       });
@@ -188,13 +198,10 @@ export class LevelScene extends BaseScene {
   }
 
   private createPauseButton(): void {
-    const pauseButton = new Text({
-      text: '⏸️',
-      style: { fontSize: 30, fill: '#ffffff' },
-    });
+    const pauseButton = new Text('⏸️', { fontSize: 30, fill: '#ffffff' });
     pauseButton.position.set(680, 10);
-    pauseButton.interactive = true;
-    pauseButton.on('pointerdown', () => {
+    (pauseButton as any).interactive = true;
+    (pauseButton as any).on('pointerdown', (event: PointerEvent) => {
       this.togglePause();
       pauseButton.text = this.isPaused ? '▶️' : '⏸️';
     });
@@ -202,13 +209,15 @@ export class LevelScene extends BaseScene {
   }
 
   private createBoosterButton(): void {
-    this.boosterButton = new Text({
-      text: '⏳ - Booster',
-      style: { fontSize: 24, fill: '#ffffff' },
+    this.boosterButton = new Text('⏳ - Booster', {
+      fontSize: 24,
+      fill: '#ffffff',
     });
     this.boosterButton.position.set(500, 10);
-    this.boosterButton.interactive = true;
-    this.boosterButton.on('pointerdown', () => this.useBooster());
+    (this.boosterButton as any).interactive = true;
+    (this.boosterButton as any).on('pointerdown', (event: PointerEvent) =>
+      this.useBooster()
+    );
     this.addChild(this.boosterButton);
   }
   private handleEnemyDefeated() {
@@ -237,7 +246,7 @@ export class LevelScene extends BaseScene {
     // Обновим UI кнопки
     this.boosterButton.text = 'Booster Used';
     this.boosterButton.style.fill = '#272727';
-    this.boosterButton.interactive = false;
+    (this.boosterButton as any).interactive = false;
   }
   private nextLevel() {
     if (LevelManager.isLastLevel()) {
@@ -292,7 +301,8 @@ export class LevelScene extends BaseScene {
   private togglePause() {
     if (this.levelEnded) return;
     this.isPaused = !this.isPaused;
-    this.boosterButton.interactive = !this.isPaused;
+    (this.boosterButton as any).interactive = !this.isPaused;
+
     EnemyManager.setEnemiesInteractive(!this.isPaused);
   }
 

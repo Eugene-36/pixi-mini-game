@@ -1,4 +1,4 @@
-import { Ticker } from 'pixi.js';
+import { Ticker } from '@pixi/ticker';
 import { Game } from './core/Game';
 import { LevelManager } from './managers/LevelManager';
 

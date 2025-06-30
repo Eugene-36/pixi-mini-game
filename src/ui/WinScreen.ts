@@ -1,6 +1,9 @@
-import { Container, Graphics, Text } from 'pixi.js';
 import { createBasicButton } from '../utils/createBasicButton';
-
+// ========
+import { Graphics } from '@pixi/graphics';
+import { Text } from '@pixi/text';
+import { Container } from '@pixi/display';
+// ========
 export class WinScreen extends Container {
   private messageText: Text;
   private nextButton!: Text;
@@ -17,16 +20,14 @@ export class WinScreen extends Container {
     this.visible = false;
   }
   private createBackground(): void {
-    const background = new Graphics()
-      .rect(0, 0, 800, 600)
-      .fill({ color: 0x000000, alpha: 0.8 });
+    const background = new Graphics();
+    background.beginFill(0x000000, 0.8);
+    background.drawRect(0, 0, 800, 600);
+    background.endFill();
     this.addChild(background);
   }
   private createMessageText(): Text {
-    const text = new Text({
-      text: '',
-      style: { fontSize: 48, fill: '#ffffff' },
-    });
+    const text = new Text('', { fontSize: 48, fill: '#ffffff' });
     text.anchor.set(0.5);
     text.position.set(400, 200);
     return text;
@@ -44,10 +45,7 @@ export class WinScreen extends Container {
 
     if (mode === 'win') {
       for (let i = 0; i < stars; i++) {
-        const star = new Text({
-          text: '⭐',
-          style: { fontSize: 36, fill: '#ffcc00' },
-        });
+        const star = new Text('⭐', { fontSize: 36, fill: '#ffcc00' });
         star.anchor.set(0.5);
         star.position.set(340 + i * 40, 440);
         this.addChild(star);

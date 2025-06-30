@@ -1,5 +1,4 @@
-import { Text, TextStyle } from 'pixi.js';
-
+import { Text, TextStyle } from '@pixi/text';
 export function createBasicButton(
   label: string,
   x: number,
@@ -7,20 +6,17 @@ export function createBasicButton(
   onClick: () => void,
   styleOverrides: Partial<TextStyle> = {}
 ): Text {
-  const button = new Text({
-    text: label,
-    style: {
-      fontSize: 36,
-      fill: '#ffffff',
-      ...styleOverrides,
-    },
+  const button = new Text(label, {
+    fontSize: 36,
+    fill: '#ffffff',
+    ...styleOverrides,
   });
 
   button.anchor.set(0.5);
   button.position.set(x, y);
-  button.interactive = true;
-  button.cursor = 'pointer';
-  button.on('pointerdown', onClick);
+  (button as any).interactive = true;
+  (button as any).cursor = 'pointer';
+  (button as any).on('pointerdown', (event: PointerEvent) => onClick);
 
   return button;
 }
