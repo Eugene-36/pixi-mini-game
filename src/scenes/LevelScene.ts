@@ -239,7 +239,6 @@ export class LevelScene extends BaseScene {
     (this.boosterButton as any).interactive = false;
   }
   private nextLevel() {
-    console.log('Moving to next level');
     if (LevelManager.isLastLevel()) {
       // Все уровни пройдены — показываем финал
       Game.instance.changeScene(new FinalWinScene());
