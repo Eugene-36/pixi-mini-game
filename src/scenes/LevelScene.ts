@@ -1,4 +1,3 @@
-// import { Graphics, Sprite, Text, Assets, Texture } from 'pixi.js';
 // ========
 import { Graphics } from '@pixi/graphics';
 import { Sprite } from '@pixi/sprite';
@@ -132,8 +131,8 @@ export class LevelScene extends BaseScene {
         fill: '#ffffff',
       });
       this.muteBtn.position.set(740, 10);
-      (this.muteBtn as any).interactive = true;
-      (this.muteBtn as any).on('pointerdown', (event: PointerEvent) => {
+      this.muteBtn.eventMode = 'static';
+      this.muteBtn.on('pointerdown', () => {
         SoundManager.toggleMute();
         this.updateMuteIcon();
       });
@@ -190,8 +189,8 @@ export class LevelScene extends BaseScene {
   private createPauseButton(): void {
     const pauseButton = new Text('⏸️', { fontSize: 30, fill: '#ffffff' });
     pauseButton.position.set(680, 10);
-    (pauseButton as any).interactive = true;
-    (pauseButton as any).on('pointerdown', (event: PointerEvent) => {
+    pauseButton.eventMode = 'static';
+    pauseButton.on('pointerdown', () => {
       this.togglePause();
       pauseButton.text = this.isPaused ? '▶️' : '⏸️';
     });
@@ -204,10 +203,8 @@ export class LevelScene extends BaseScene {
       fill: '#ffffff',
     });
     this.boosterButton.position.set(500, 10);
-    (this.boosterButton as any).interactive = true;
-    (this.boosterButton as any).on('pointerdown', (event: PointerEvent) =>
-      this.useBooster()
-    );
+    this.boosterButton.eventMode = 'static';
+    this.boosterButton.on('pointerdown', () => this.useBooster());
     this.addChild(this.boosterButton);
   }
   private handleEnemyDefeated() {
@@ -236,7 +233,7 @@ export class LevelScene extends BaseScene {
     // Обновим UI кнопки
     this.boosterButton.text = 'Booster Used';
     this.boosterButton.style.fill = '#272727';
-    (this.boosterButton as any).interactive = false;
+    this.boosterButton.eventMode = 'auto';
   }
   private nextLevel() {
     if (LevelManager.isLastLevel()) {
@@ -291,7 +288,7 @@ export class LevelScene extends BaseScene {
   private togglePause() {
     if (this.levelEnded) return;
     this.isPaused = !this.isPaused;
-    (this.boosterButton as any).interactive = !this.isPaused;
+    this.boosterButton.interactive = !this.isPaused;
 
     EnemyManager.setEnemiesInteractive(!this.isPaused);
   }

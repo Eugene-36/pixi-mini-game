@@ -31,14 +31,13 @@ export class Enemy extends AnimatedSprite {
     this.setupInteractivity();
   }
   private setupInteractivity() {
-    this.interactive = true;
+    this.eventMode = 'static';
     this.on('pointerdown', this.handleClick);
   }
   private handleClick = () => {
     if (this.destroyed || EnemyManager.isGameOver()) return;
 
     this.hitEffect.play(this.x, this.y);
-    // console.log('Enemy defeated:', this.destroy());
     this.destroy();
     Enemy.onEnemyDefeated(this);
     SoundManager.play('click');

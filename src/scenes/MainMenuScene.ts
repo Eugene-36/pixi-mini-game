@@ -24,11 +24,9 @@ export class MainMenuScene extends BaseScene {
     const buttonTexture = await Assets.load('/assets/startGame.png');
 
     const button = new Sprite(buttonTexture);
-    // const button = new Sprite(buttonTexture) as Sprite & InteractiveTarget;
     button.anchor.set(0.5);
     button.position.set(Game.app.screen.width / 2, Game.app.screen.height / 2);
     button.scale.set(0.5);
-    button.interactive = true;
     button.eventMode = 'static';
     button.cursor = 'pointer';
 

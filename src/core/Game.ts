@@ -14,7 +14,7 @@ export class Game {
     Game.app = new Application({
       width: 800,
       height: 600,
-      backgroundColor: 0x1099bb,
+      backgroundColor: 0x000000,
     });
     Game.instance = this;
     document.body.appendChild(Game.app.view as unknown as HTMLCanvasElement);
