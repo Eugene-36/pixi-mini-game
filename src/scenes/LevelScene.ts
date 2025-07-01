@@ -60,6 +60,9 @@ export class LevelScene extends BaseScene {
 
   init() {
     console.log('⏳ Loading assets...');
+    this.hitEffect = new HitEmitter(this, Texture.from('/assets/particle.png'));
+    EnemyManager.hitEffect = this.hitEffect;
+    Game.app.ticker.add((delta) => this.hitEffect.update(delta));
     this.loadAssets();
     // this.hitEffect = new HitEmitter(this, Texture.from('particle.png'));
 

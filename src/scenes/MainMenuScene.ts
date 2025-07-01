@@ -14,10 +14,8 @@ export class MainMenuScene extends BaseScene {
     super();
 
     const swordCursor = "url('/assets/sword.png'), auto";
-    const canvas = Game.app.view as HTMLCanvasElement;
-    if (canvas && canvas.style) {
-      canvas.style.cursor = swordCursor;
-    }
+    Game.app.renderer.events.cursorStyles.default = swordCursor;
+    Game.app.renderer.events.cursorStyles.hover = swordCursor;
 
     this.loadAssets();
   }
@@ -37,15 +35,10 @@ export class MainMenuScene extends BaseScene {
     //Клик только по картинке
     const width = buttonTexture.width * button.scale.x;
     const height = buttonTexture.height * button.scale.y;
-    (button as any).hitArea = new Rectangle(
-      -width / 2,
-      -height / 2,
-      width,
-      height
-    );
+    button.hitArea = new Rectangle(-width / 2, -height / 2, width, height);
 
     button.on('pointerdown', () => {
-      console.log('Button clicked!');
+      console.log('loadAssets MainMenuScene!');
 
       SoundManager.playBg();
       Game.instance.changeScene(new LevelScene());

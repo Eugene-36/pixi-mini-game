@@ -68,6 +68,7 @@ export class HitEmitter {
         },
       ],
     });
+    this.emitter.emit = false;
   }
   play(x: number, y: number) {
     this.emitter.updateOwnerPos(x, y);
