@@ -31,18 +31,14 @@ export class Enemy extends AnimatedSprite {
     this.setupInteractivity();
   }
   private setupInteractivity() {
-    // this.interactive = true;
     this.interactive = true;
-    // this.on('pointerdown', this.handleClick);
-
     this.on('pointerdown', this.handleClick);
   }
   private handleClick = () => {
-    console.log('Enemy clicked:', this);
     if (this.destroyed || EnemyManager.isGameOver()) return;
 
-    console.log('this.x', this.x, 'this.y', this.y);
     this.hitEffect.play(this.x, this.y);
+    // console.log('Enemy defeated:', this.destroy());
     this.destroy();
     Enemy.onEnemyDefeated(this);
     SoundManager.play('click');
@@ -57,7 +53,8 @@ export class Enemy extends AnimatedSprite {
     }
   }
   destroy(): void {
-    this.off('pointerdown', this.handleClick);
+    if (this.destroyed) return;
+    this?.off('pointerdown', this.handleClick);
     super.destroy();
   }
 }

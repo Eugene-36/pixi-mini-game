@@ -59,24 +59,14 @@ export class LevelScene extends BaseScene {
   }
 
   init() {
-    console.log('⏳ Loading assets...');
     this.hitEffect = new HitEmitter(this, Texture.from('/assets/particle.png'));
     EnemyManager.hitEffect = this.hitEffect;
     Game.app.ticker.add((delta) => this.hitEffect.update(delta));
     this.loadAssets();
-    // this.hitEffect = new HitEmitter(this, Texture.from('particle.png'));
-
-    // this.enemy = new Enemy(this.enemyTextures, this.hitEffect);
-    // this.addChild(this.enemy);
-    // this.hitEffect = new HitEmitter(this, Texture.from('particle.png'));
-    // Game.app.ticker.add((delta) => this.hitEffect.update(delta));
-    console.log('✅ LevelScene init() called');
   }
 
   async loadAssets() {
     try {
-      console.log('⏳ Loading assets...');
-
       const backgroundTexture = await Assets.load('/assets/dragon-bg.png');
       const bgSprite = new Sprite(backgroundTexture);
       bgSprite.width = Game.app.screen.width;
@@ -84,9 +74,7 @@ export class LevelScene extends BaseScene {
       this.addChildAt(bgSprite, 0);
 
       const atlasTextures = await loadAtlas('/assets/enemies/dr1');
-
       this.enemyTextures = Object.values(atlasTextures); // по порядку, если нужны все
-      console.log('✅ Loaded enemy textures:', this.enemyTextures.length);
 
       this.startLevel();
     } catch (error) {
@@ -120,7 +108,6 @@ export class LevelScene extends BaseScene {
       this.removeChild(this.levelPopupText);
       this.levelPopupText.destroy();
     }
-
     this.levelPopupText = new Text(`Level ${level}`, {
       fontSize: 60,
       fill: '#ffffff',
@@ -252,6 +239,7 @@ export class LevelScene extends BaseScene {
     (this.boosterButton as any).interactive = false;
   }
   private nextLevel() {
+    console.log('Moving to next level');
     if (LevelManager.isLastLevel()) {
       // Все уровни пройдены — показываем финал
       Game.instance.changeScene(new FinalWinScene());

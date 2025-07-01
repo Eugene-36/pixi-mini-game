@@ -63,6 +63,7 @@ export class EnemyManager {
     this.totalToSpawn = 0;
   }
   static clearEnemies(): void {
+    console.log('Clearing enemies', this.enemies);
     this.enemies.forEach((enemy) => enemy.destroy());
     this.enemies = [];
   }

@@ -19,6 +19,7 @@ export class LevelManager {
     return this.levels[this.currentLevelIndex];
   }
   static nextLevel(): void {
+    console.log(`Moving to next level: work`);
     if (this.currentLevelIndex < this.levels.length - 1) {
       this.currentLevelIndex++;
     }

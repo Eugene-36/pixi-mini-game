@@ -38,8 +38,6 @@ export class MainMenuScene extends BaseScene {
     button.hitArea = new Rectangle(-width / 2, -height / 2, width, height);
 
     button.on('pointerdown', () => {
-      console.log('loadAssets MainMenuScene!');
-
       SoundManager.playBg();
       Game.instance.changeScene(new LevelScene());
     });

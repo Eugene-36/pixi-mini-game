@@ -14,9 +14,9 @@ export function createBasicButton(
 
   button.anchor.set(0.5);
   button.position.set(x, y);
-  (button as any).interactive = true;
-  (button as any).cursor = 'pointer';
-  (button as any).on('pointerdown', (event: PointerEvent) => onClick);
+  button.eventMode = 'static';
+  button.cursor = 'pointer';
+  button.on('pointerdown', onClick);
 
   return button;
 }
