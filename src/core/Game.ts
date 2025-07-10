@@ -4,6 +4,8 @@ import { BaseScene } from '../scenes/BaseScene';
 import { SoundManager } from '../managers/SoundManager';
 import { extensions } from '@pixi/extensions';
 import { EventSystem } from '@pixi/events';
+import { ProgressManager } from '../managers/ProgressManager';
+import { LevelManager } from '../managers/LevelManager';
 export class Game {
   public static app: Application;
   public static currentScene: BaseScene;
@@ -29,6 +31,11 @@ export class Game {
   }
 
   start() {
+    const saved = ProgressManager.load();
+    if (saved) {
+      LevelManager.setCurrentLevel(saved.level);
+      SoundManager.setMuted(saved.muted);
+    }
     this.changeScene(new MainMenuScene());
   }
 

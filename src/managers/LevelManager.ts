@@ -32,4 +32,10 @@ export class LevelManager {
   static getLevelId(): number {
     return this.levels[this.currentLevelIndex]?.id || 0;
   }
+  static setCurrentLevel(level: number): void {
+    const index = this.levels.findIndex((l) => l.id === level);
+    if (index !== -1) {
+      this.currentLevelIndex = index;
+    }
+  }
 }

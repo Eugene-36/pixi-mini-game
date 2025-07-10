@@ -17,6 +17,7 @@ import { FinalWinScene } from '../ui/FinalWinScene';
 import { createOrUpdateText } from '../utils/uiHelpers';
 import { HitEmitter } from '../visualEffects/HitEmitter';
 import { loadAtlas } from '../utils/loadAtlas';
+import { ProgressManager } from '../managers/ProgressManager';
 
 export class LevelScene extends BaseScene {
   private enemyTextures: Texture[] = [];
@@ -217,8 +218,16 @@ export class LevelScene extends BaseScene {
 
       this.winScreen.setMode('win');
       this.winScreen.show('win', stars);
+      this.winScreen.restartFormFirstLevel();
 
       this.levelEnded = true;
+
+      //Сохраняем прогресс уровня
+      ProgressManager.saveProgress({
+        level: config.id,
+        stars: stars,
+        muted: SoundManager.isMuted,
+      });
       SoundManager.play('win');
     }
   }

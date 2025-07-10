@@ -45,4 +45,14 @@ export class SoundManager {
   static stopBg() {
     this.bg.stop();
   }
+
+  static setMuted(muted: boolean) {
+    if (this.isMuted === muted) return;
+    this.isMuted = muted;
+    this.bg?.mute(muted);
+    this.click?.mute(muted);
+    this.win?.mute(muted);
+    this.lose?.mute(muted);
+    this.completeGame?.mute(muted);
+  }
 }

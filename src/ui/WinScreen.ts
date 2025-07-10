@@ -3,6 +3,10 @@ import { createBasicButton } from '../utils/createBasicButton';
 import { Graphics } from '@pixi/graphics';
 import { Text } from '@pixi/text';
 import { Container } from '@pixi/display';
+import { Game } from '../core/Game';
+import { LevelScene } from '../scenes/LevelScene';
+import { ProgressManager } from '../managers/ProgressManager';
+import { LevelManager } from '../managers/LevelManager';
 // ========
 export class WinScreen extends Container {
   private messageText: Text;
@@ -70,5 +74,14 @@ export class WinScreen extends Container {
       this.messageText.text = "Time's Up!";
       this.nextButton.visible = false;
     }
+  }
+  restartFormFirstLevel() {
+    const resetButton = createBasicButton('Start Over', 400, 440, () => {
+      ProgressManager.clear();
+      LevelManager.reset();
+      Game.instance.changeScene(new LevelScene());
+    });
+
+    this.addChild(resetButton);
   }
 }

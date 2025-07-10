@@ -22,7 +22,6 @@ export class MainMenuScene extends BaseScene {
 
   async loadAssets() {
     const buttonTexture = await Assets.load('/assets/startGame.png');
-
     const button = new Sprite(buttonTexture);
     button.anchor.set(0.5);
     button.position.set(Game.app.screen.width / 2, Game.app.screen.height / 2);
