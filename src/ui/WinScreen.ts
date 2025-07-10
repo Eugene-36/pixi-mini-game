@@ -51,7 +51,7 @@ export class WinScreen extends Container {
       for (let i = 0; i < stars; i++) {
         const star = new Text('⭐', { fontSize: 36, fill: '#ffcc00' });
         star.anchor.set(0.5);
-        star.position.set(340 + i * 40, 440);
+        star.position.set(340 + i * 40, 500);
         this.addChild(star);
         this.starIcons.push(star);
       }
